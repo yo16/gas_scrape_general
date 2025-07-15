@@ -1,0 +1,23 @@
+{
+  "name": "gas_scrape_general",
+  "version": "1.0.0",
+  "description": "GASでスクレイプする",
+  "homepage": "https://github.com/yo16/gas_scrape_general#readme",
+  "bugs": {
+    "url": "https://github.com/yo16/gas_scrape_general/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yo16/gas_scrape_general.git"
+  },
+  "license": "MIT",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@google/clasp": "^3.0.6-alpha"
+  }
+}
