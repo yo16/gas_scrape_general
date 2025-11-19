@@ -4,19 +4,8 @@ function main() {
     // 対象のURLを設定
     const TARGET_URL = "https://techcrunch.com/latest/";
 
-    // ヘッダーを設定
-    // ユーザーエージェント(自分のブラウザの情報)を設定
-    const options = {
-        method: 'get',
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
-        },
-        muteHttpExceptions: true
-    };
-
     // ページを取得
-    const response = UrlFetchApp.fetch(TARGET_URL, options);
-    const htmlText = response.getContentText();
+    const htmlText = getHtml(TARGET_URL);
     //writeToSheet(htmlText.split(/\r?\n/), "TechCrunch");
 
     // レスポンスをログに出力
@@ -28,5 +17,15 @@ function main() {
 
     // シートへ出力
     writeToSheet(articleList, SHEET_NAME_TECHCRUNCH);
+
+    // シートを読んで、１つずつAIで要約する
+    summarizePages();
 }
 
+// シートを読んで、１つずつAIで要約する
+function summarizePages() {
+    const techCrunchUrlColumn = 3;
+    const techCrunchSummaryColumn = 5;
+    summarizePage(SHEET_NAME_TECHCRUNCH, techCrunchUrlColumn, techCrunchSummaryColumn);
+
+}

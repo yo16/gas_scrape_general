@@ -14,16 +14,16 @@ function getTechCrunchLatest(htmlText) {
             '"wp-block-post post-[0-9]+ post type-post ',
             'status-publish format-standard has-post-thumbnail ',
             'hentry category-[^"]+"',
-        '[^>]*>([\\s\\S]*?</li>[\\s\\S]*?)</li>',   // 内側に１つのli要素がある
+        '[^>]*>([\\s\\S]*?)</li>',   // 内側のli要素をキャプチャ
     ].join('');
     Logger.log(elementPatternStr);
     const elementPattern = new RegExp(elementPatternStr, 'g');
 
     // 記事のリストを検索
     const elementList = [...htmlText.matchAll(elementPattern)];
-    if (!elementList) {
+    if (elementList.length === 0) {
         Logger.log("記事が見つかりませんでした");
-        return;
+        return [];
     }
     Logger.log(`elementList-length: ${elementList.length}`);
 
@@ -34,6 +34,10 @@ function getTechCrunchLatest(htmlText) {
         i++;
         Logger.log(`i: ${i}`);
         // li要素の中身(2つ目の検索結果)を渡す
+        if (!element[1]) {
+            Logger.log(`skipped article i: ${i} - no content`);
+            continue;
+        }
         const article = getTechCrunchOneArticle(element[1]);
         if (!article) {
             Logger.log(`skipped article i: ${i}`);
